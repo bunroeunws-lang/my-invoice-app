@@ -1,0 +1,236 @@
+<!doctype html>
+<html lang="km">
+  <head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset="UTF-8" />
+    <title>វិក្កយបត្រ - ពៅ ជាងដែក</title>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Battambang&family=Moul&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+        /* កំណត់សម្រាប់អេក្រង់ទូរស័ព្ទ */
+    @media screen and (max-width: 600px) {
+        body { width: 100%; padding: 10px; }
+        .no-print form { display: flex; flex-direction: column; }
+        table { font-size: 12px; } /* បង្រួមអក្សរតារាងលើទូរស័ព្ទ */
+    }
+
+    /* កំណត់សម្រាប់ពេលបោះពុម្ព (Print) កុំឱ្យដាច់ខាងស្តាំ */
+    @media print {
+        body { width: 790px; margin: 0; padding: 0; }
+        table { width: 100%; border-collapse: collapse; }
+        .no-print { display: none; }
+    }
+
+
+      body { font-family: 'Battambang', sans-serif; width: 850px; margin: auto; padding: 40px; color: black; }
+      .no-print { background: #f0f2f5; padding: 20px; border-radius: 8px; margin-bottom: 30px; border: 1px solid #ccc; }
+      .header-top { display: flex; justify-content: space-between; align-items: center; }
+      .logo-box { width: 100px; height: 100px; border: none:""; text-align: center; line-height: 100px; font-size: 12px; }
+      .shop-name { font-family: 'Moul', serif; font-size: 40px; margin: 0; text-align: center; }
+      .sub-text { font-family: 'Battambang', sans-serif; font-size: 20px; font-weight: bold; text-align: center; margin: 15px 0; }
+      .contact-row { display: flex; justify-content: space-between; font-size: 16px; line-height: 1.8; }
+      .invoice-title { font-family: 'Moul', serif; font-size: 26px; text-align: center; text-decoration: underline; margin: 25px 0; }
+
+      table { width: 100%; border-collapse: collapse; margin-top: 10px; }
+      table, th, td { border: 1.5px solid black; }
+      th { padding: 12px; font-size: 16px; background: #f8f8f8; }
+      td { padding: 10px; text-align: center; height: 35px; }
+      .text-left { text-align: left; padding-left: 15px; }
+
+.summary-wrapper { display: flex; justify-content: space-between; align-items: flex-start; margin-top: -1.2px; }
+        .date-display { padding-top: 8px; font-weight: bold; }
+        .total-section { display: flex; flex-direction: column; }
+        .total-row { display: flex; }
+        .total-label { width: 110px; padding: 8px; border-top: none; border-right: none; text-align: right; font-weight: bold; }
+        .total-value { width: 253px; padding: 8px; border: 1.2px solid black; border-top: none; text-align: center; font-weight: bold; font-size: 18px; }
+
+      @media print { .no-print { display: none; } body { padding: 0; } }
+    </style>
+  </head>
+  <body>
+    <div class="no-print">
+      <form
+        action="/add"
+        method="POST"
+        style="display: flex; gap: 8px; flex-wrap: wrap"
+      >
+        <input
+          type="text"
+          name="name"
+          placeholder="ឈ្មោះទំនិញ"
+          required
+          style="flex: 2; padding: 8px"
+        />
+        <input
+          type="number"
+          name="qty"
+          placeholder="ចំនួន"
+          style="width: 60px; padding: 8px"
+        />
+        <select
+          name="unit"
+          style="
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            background: white;
+          "
+        >
+          <option value="">--ជ្រើសរើសខ្នាត--</option>
+          <option value="ម៉ែត្រ">ម៉ែត្រ</option>
+          <option value="ការ៉េ">ការ៉េ</option>
+          <option value="កំប៉ុង">កំប៉ុង</option>
+          <option value="ឈុត">ឈុត</option>
+          <option value="ថង់">ថង់</option>
+          <option value="គីឡូ">គីឡូ</option>
+          <option value="វង់">វង់</option>
+          <option value="ដើម">ដើម</option>
+          <option value="ផ្ទាំង">ផ្ទាំង</option>
+          <option value="ខ្នង">ខ្នង</option>
+          <option value="ជ្រុង">ជ្រុង</option>
+          <option value="លីត្រ">លីត្រ</option>
+        </select>
+        <input
+          type="number"
+          step="0.01"
+          name="price"
+          placeholder="តម្លៃ $"
+          style="width: 100px; padding: 8px"
+        />
+        <input
+          type="number"
+          step="0.01"
+          name="deposit"
+          placeholder="លុយកក់ $"
+          style="width: 100px; padding: 8px; background: #fff3cd"
+        />
+        <button
+          type="submit"
+          style="
+            padding: 8px 15px;
+            background: #28a745;
+            color: white;
+            border: none;
+            cursor: pointer;
+          "
+        >
+          + បន្ថែម
+        </button>
+        <button
+          type="button"
+          onclick="window.print()"
+          style="
+            padding: 8px 15px;
+            background: #007bff;
+            color: white;
+            border: none;
+            cursor: pointer;
+          "
+        >
+          បោះពុម្ព
+        </button>
+        <a
+          href="/clear"
+          style="
+            background: #dc3545;
+            color: white;
+            padding: 10px 20px;
+            text-decoration: none;
+            border-radius: 5px;
+          "
+          >លុបទាំងអស់</a
+        >
+      </form>
+    </div>
+
+    <div class="header-top">
+      <div class="logo-box">
+        <img
+          src="{{ url_for('static', filename='logo.jpg') }}"
+          alt="Logo"
+          style="max-width: 100%; max-height: 100%; object-fit: contain"
+        />
+      </div>
+
+      <div class="shop-name">ពៅ ជាងដែក</div>
+
+      <div class="logo-box">
+        <img
+          src="{{ url_for('static', filename='shop_image.jpg') }}"
+          alt="Shop_Image"
+          style="max-width: 100%; max-height: 100%; object-fit: cover"
+        />
+      </div>
+    </div>
+
+    <div class="sub-text">
+      មានទទួលធ្វើ ឃ្លាំង ទ្វារ បង្អួច សំយ៉ាបផ្ទះ របង និងការងារដែកគ្រប់ប្រភេទ
+    </div>
+
+    <div class="contact-row">
+      <div>
+        អាសយដ្ឋាន៖ ភូមិប្រជាធម្មខាងកើត មណ្ឌលទី 9<br />សង្កាត់ផ្សារកណ្តាល
+        ក្រុងប៉ោយប៉ែត ខេត្តបន្ទាយមានជ័យ
+      </div>
+      <div style="text-align: right">
+        Tel : 016 35 65 73<br />
+        : 092 35 65 73
+      </div>
+    </div>
+
+    <div class="invoice-title">វិក្កយបត្រ</div>
+
+    <table>
+      <thead>
+        <tr>
+          <th style="width: 50px">ល.រ</th>
+          <th>ឈ្មោះទំនិញ</th>
+          <th style="width: 70px">ចំនួន</th>
+          <th style="width: 70px">ខ្នាត</th>
+          <th style="width: 110px">តម្លៃរាយ</th>
+          <th style="width: 110px">តម្លៃសរុប</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for item in items %}
+        <tr>
+          <td>{{ loop.index }}</td>
+          <td class="text-left">{{ item.name }}</td>
+          <td>{{ item.qty or '' }}</td>
+          <td>{{ item.unit or '' }}</td>
+          <td>$ {{ "{:,.2f}".format(item.price) }}</td>
+          <td>$ {{ "{:,.2f}".format(item.total) }}</td>
+        </tr>
+        {% endfor %} {% for i in range(items|length + 1, 12) %}
+        <tr>
+          <td>{{ i }}</td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+    <div class="summary-wrapper">
+            <div class="date-display">ថ្ងៃទី {{ date }}</div>
+            <div class="total-section">
+                <div class="total-row">
+                    <div class="total-label">តម្លៃសរុប៖</div>
+                    <div class="total-value">$ {{ "{:,.2f}".format(grand_total) }}</div>
+                </div>
+                <div class="total-row">
+                    <div class="total-label">លុយកក់៖</div>
+                    <div class="total-value">$ {{ "{:,.2f}".format(deposit) }}</div>
+                </div>
+                <div class="total-row">
+                    <div class="total-label" style="color: red;">នៅសល់៖</div>
+                    <div class="total-value" style="color: red;">$ {{ "{:,.2f}".format(balance) }}</div>
+                </div>
+            </div>
+    </div>
+  </body>
+</html>
